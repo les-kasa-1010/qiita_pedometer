@@ -69,6 +69,8 @@ class LogItemActivityTest : AutoCloseKoinTest() {
         defaultIntent = Intent().apply {
             putExtra(EXTRA_KEY_INITIAL_DATE, calendarProvider.now)
         }
+        val analyticsUtil: AnalyticsUtil by inject()
+        analyticsUtil.disable()
     }
 
     @After
