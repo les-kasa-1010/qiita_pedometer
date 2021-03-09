@@ -1,6 +1,5 @@
 package jp.les.kasa.sample.mykotlinapp.utils
 
-import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import com.google.firebase.FirebaseApp
@@ -16,7 +15,6 @@ abstract class AnalyticsUtilI {
      * スクリーン名報告
      */
     abstract fun sendScreenName(
-        activity: Activity,
         screenName: String,
         classOverrideName: String? = null
     )
@@ -119,12 +117,17 @@ class AnalyticsUtil(app: Application) : AnalyticsUtilI() {
         FirebaseApp.initializeApp(app)
     }
 
-    override fun sendScreenName(
-        activity: Activity,
-        screenName: String,
-        classOverrideName: String?
-    ) {
-        firebaseAnalytics.setCurrentScreen(activity, screenName, classOverrideName)
+    override fun sendScreenName(screenName: String, classOverrideName: String?) {
+        val bundle = Bundle().apply {
+            putString(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
+            classOverrideName?.also {
+                putString(
+                    FirebaseAnalytics.Param.SCREEN_CLASS,
+                    classOverrideName
+                )
+            }
+        }
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
     }
 
     override fun logEvent(eventName: String, bundle: Bundle?) {

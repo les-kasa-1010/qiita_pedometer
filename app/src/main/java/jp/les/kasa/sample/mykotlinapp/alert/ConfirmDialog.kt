@@ -115,7 +115,7 @@ class ConfirmDialog : DialogFragment(), DialogInterface.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-        activity?.let { analyticsUtil.sendScreenName(it, SCREEN_NAME) }
+        analyticsUtil.sendScreenName(SCREEN_NAME)
     }
 
     override fun onClick(dialog: DialogInterface?, which: Int) {

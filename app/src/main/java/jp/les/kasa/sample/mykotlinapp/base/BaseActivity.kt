@@ -14,6 +14,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        analyticsUtil.sendScreenName(this, screenName)
+        analyticsUtil.sendScreenName(screenName)
     }
 }

@@ -1,6 +1,5 @@
 package jp.les.kasa.sample.mykotlinapp.di
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.room.Room
 import jp.les.kasa.sample.mykotlinapp.data.LogRoomDatabase
@@ -52,7 +51,6 @@ class MockEnvironmentProvider : EnvironmentProviderI {
 // AnalyticsUtilのモッククラス
 class MockAnalyticsUtil : AnalyticsUtilI() {
     override fun sendScreenName(
-        activity: Activity,
         screenName: String,
         classOverrideName: String?
     ) {

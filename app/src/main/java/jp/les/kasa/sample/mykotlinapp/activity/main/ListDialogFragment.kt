@@ -47,7 +47,7 @@ class ListDialogFragment : DialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        activity?.let { analyticsUtil.sendScreenName(it, SCREEN_NAME) }
+        analyticsUtil.sendScreenName(SCREEN_NAME)
     }
 
 }

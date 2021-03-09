@@ -13,7 +13,7 @@ abstract class BaseFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        activity?.let { analyticsUtil.sendScreenName(it, screenName) }
+        analyticsUtil.sendScreenName(screenName)
     }
 
 }

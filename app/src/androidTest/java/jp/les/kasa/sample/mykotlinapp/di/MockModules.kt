@@ -1,6 +1,5 @@
 package jp.les.kasa.sample.mykotlinapp.di
 
-import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
@@ -185,7 +184,6 @@ class MockAuthUIActivity : AppCompatActivity()
 // AnalyticsUtilのモッククラス
 class TestAnalyticsUtil : AnalyticsUtilI() {
     override fun sendScreenName(
-        activity: Activity,
         screenName: String,
         classOverrideName: String?
     ) {
