@@ -18,20 +18,6 @@ class AnalyticsUtil(app: Application) {
     }
 
     /**
-     * Analyticsを有効にする:defaultはtrue
-     */
-    fun enable() {
-        firebaseAnalytics.setAnalyticsCollectionEnabled(true)
-    }
-
-    /**
-     * Analyticsを無効にする
-     */
-    fun disable() {
-        firebaseAnalytics.setAnalyticsCollectionEnabled(false)
-    }
-
-    /**
      * 画面名報告
      */
     fun sendScreenName(activity: Activity, screenName: String, classOverrideName: String? = null) {
