@@ -14,12 +14,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import jp.les.kasa.sample.mykotlinapp.R
+import jp.les.kasa.sample.mykotlinapp.activity.ActivityTestBase
 import jp.les.kasa.sample.mykotlinapp.activity.main.MainActivity
 import jp.les.kasa.sample.mykotlinapp.activity.share.InstagramShareActivity
 import jp.les.kasa.sample.mykotlinapp.activity.share.TwitterShareActivity
 import jp.les.kasa.sample.mykotlinapp.data.*
 import jp.les.kasa.sample.mykotlinapp.di.CalendarProviderI
-import jp.les.kasa.sample.mykotlinapp.di.testMockModule
 import jp.les.kasa.sample.mykotlinapp.espresso.withDrawable
 import jp.les.kasa.sample.mykotlinapp.utils.*
 import org.assertj.core.api.Assertions.assertThat
@@ -29,13 +29,11 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.core.context.loadKoinModules
 import org.koin.core.inject
-import org.koin.test.AutoCloseKoinTest
 import java.util.*
 
 @RunWith(AndroidJUnit4::class)
-class LogItemActivityTestI : AutoCloseKoinTest() {
+class LogItemActivityTestI : ActivityTestBase() {
     @get:Rule
     val activityRule = ActivityTestRule(LogItemActivity::class.java, false, false)
 
@@ -47,8 +45,8 @@ class LogItemActivityTestI : AutoCloseKoinTest() {
     lateinit var defaultIntent: Intent
 
     @Before
-    fun setUp() {
-        loadKoinModules(testMockModule)
+    override fun setUp() {
+        super.setUp()
 
         // モジュールを差し替えた後じゃないとモック化されたCalendarProviderIを使えない
         defaultIntent = Intent().apply {

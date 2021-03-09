@@ -10,20 +10,26 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import jp.les.kasa.sample.mykotlinapp.R
+import jp.les.kasa.sample.mykotlinapp.activity.ActivityTestBase
 import jp.les.kasa.sample.mykotlinapp.activity.logitem.LogItemActivity
 import jp.les.kasa.sample.mykotlinapp.data.LEVEL
 import jp.les.kasa.sample.mykotlinapp.data.ShareStatus
 import jp.les.kasa.sample.mykotlinapp.data.StepCountLog
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.test.AutoCloseKoinTest
 
 @RunWith(AndroidJUnit4::class)
-class TwitterShareActivityTestI : AutoCloseKoinTest() {
+class TwitterShareActivityTestI : ActivityTestBase() {
     @get:Rule
     val activityRule = ActivityTestRule(TwitterShareActivity::class.java, false, false)
+
+    @Before
+    override fun setUp() {
+        super.setUp()
+    }
 
     @Test
     fun layout() {

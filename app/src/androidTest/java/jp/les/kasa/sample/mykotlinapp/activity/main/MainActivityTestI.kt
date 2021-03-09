@@ -14,11 +14,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import jp.les.kasa.sample.mykotlinapp.R
+import jp.les.kasa.sample.mykotlinapp.activity.ActivityTestBase
 import jp.les.kasa.sample.mykotlinapp.activity.logitem.LogItemActivity
 import jp.les.kasa.sample.mykotlinapp.activity.share.InstagramShareActivity
 import jp.les.kasa.sample.mykotlinapp.activity.share.TwitterShareActivity
 import jp.les.kasa.sample.mykotlinapp.data.*
-import jp.les.kasa.sample.mykotlinapp.di.testMockModule
 import jp.les.kasa.sample.mykotlinapp.espresso.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.runBlocking
@@ -28,8 +28,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.core.context.loadKoinModules
-import org.koin.test.AutoCloseKoinTest
 import org.koin.test.inject
 
 
@@ -37,15 +35,15 @@ import org.koin.test.inject
  * @date 2019/06/05
  */
 @RunWith(AndroidJUnit4::class)
-class MainActivityTestI : AutoCloseKoinTest() {
+class MainActivityTestI : ActivityTestBase() {
     @get:Rule
     val activityRule = ActivityTestRule(MainActivity::class.java, false, false)
 
     private val repository: LogRepository by inject()
 
     @Before
-    fun setUp() {
-        loadKoinModules(testMockModule)
+    override fun setUp() {
+        super.setUp()
     }
 
     @After

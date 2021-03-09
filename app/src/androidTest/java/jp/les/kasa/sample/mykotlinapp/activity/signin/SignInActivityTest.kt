@@ -14,9 +14,9 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.firebase.ui.auth.ErrorCodes
 import jp.les.kasa.sample.mykotlinapp.R
+import jp.les.kasa.sample.mykotlinapp.activity.ActivityTestBase
 import jp.les.kasa.sample.mykotlinapp.di.MockAuthUIActivity
 import jp.les.kasa.sample.mykotlinapp.di.TestAuthProvider
-import jp.les.kasa.sample.mykotlinapp.di.testMockModule
 import jp.les.kasa.sample.mykotlinapp.utils.AuthProviderI
 import org.assertj.core.api.Assertions.assertThat
 import org.hamcrest.Matchers.endsWith
@@ -25,12 +25,10 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.core.context.loadKoinModules
 import org.koin.core.inject
-import org.koin.test.AutoCloseKoinTest
 
 @RunWith(AndroidJUnit4::class)
-class SignInActivityTest : AutoCloseKoinTest() {
+class SignInActivityTest : ActivityTestBase() {
     @get:Rule
     val activityRule = ActivityTestRule(SignInActivity::class.java, false, false)
 
@@ -43,8 +41,8 @@ class SignInActivityTest : AutoCloseKoinTest() {
     private fun getString(resId: Int, c: Int) = context.applicationContext.getString(resId, c)
 
     @Before
-    fun setUp() {
-        loadKoinModules(testMockModule)
+    override fun setUp() {
+        super.setUp()
     }
 
     @Test

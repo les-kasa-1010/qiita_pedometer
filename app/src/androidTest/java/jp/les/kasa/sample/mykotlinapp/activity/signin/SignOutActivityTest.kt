@@ -10,19 +10,17 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import jp.les.kasa.sample.mykotlinapp.R
-import jp.les.kasa.sample.mykotlinapp.di.testMockModule
+import jp.les.kasa.sample.mykotlinapp.activity.ActivityTestBase
 import jp.les.kasa.sample.mykotlinapp.utils.AuthProviderI
 import org.assertj.core.api.Assertions
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.core.context.loadKoinModules
 import org.koin.core.inject
-import org.koin.test.AutoCloseKoinTest
 
 @RunWith(AndroidJUnit4::class)
-class SignOutActivityTest : AutoCloseKoinTest() {
+class SignOutActivityTest : ActivityTestBase() {
     @get:Rule
     val activityRule = ActivityTestRule(SignOutActivity::class.java, false, false)
 
@@ -31,8 +29,8 @@ class SignOutActivityTest : AutoCloseKoinTest() {
     private val authProvider: AuthProviderI by inject()
 
     @Before
-    fun setUp() {
-        loadKoinModules(testMockModule)
+    override fun setUp() {
+        super.setUp()
     }
 
     /**
