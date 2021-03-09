@@ -18,14 +18,12 @@ import jp.les.kasa.sample.mykotlinapp.data.LEVEL
 import jp.les.kasa.sample.mykotlinapp.data.StepCountLog
 import jp.les.kasa.sample.mykotlinapp.data.WEATHER
 import jp.les.kasa.sample.mykotlinapp.di.mockModule
-import jp.les.kasa.sample.mykotlinapp.utils.AnalyticsUtil
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.core.context.loadKoinModules
-import org.koin.core.inject
 import org.koin.test.AutoCloseKoinTest
 
 @RunWith(AndroidJUnit4::class)
@@ -48,8 +46,6 @@ class InstagramShareActivityTest : AutoCloseKoinTest() {
     @Before
     fun setUp() {
         loadKoinModules(mockModule)
-        val analyticsUtil: AnalyticsUtil by inject()
-        analyticsUtil.disable()
     }
 
     @Test

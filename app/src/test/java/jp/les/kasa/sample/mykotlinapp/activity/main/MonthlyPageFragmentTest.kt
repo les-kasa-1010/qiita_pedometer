@@ -10,7 +10,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import jp.les.kasa.sample.mykotlinapp.*
 import jp.les.kasa.sample.mykotlinapp.data.*
 import jp.les.kasa.sample.mykotlinapp.di.mockModule
-import jp.les.kasa.sample.mykotlinapp.utils.AnalyticsUtil
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
@@ -41,8 +40,6 @@ class MonthlyPageFragmentTest : AutoCloseKoinTest() {
     fun setUp() {
         loadKoinModules(mockModule)
         get<LogRoomDatabase>().clearAllTables()
-        val analyticsUtil: AnalyticsUtil by inject()
-        analyticsUtil.disable()
     }
 
     @After

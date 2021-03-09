@@ -14,19 +14,21 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
 import jp.les.kasa.sample.mykotlinapp.R
-import jp.les.kasa.sample.mykotlinapp.activity.ActivityTestBase
 import jp.les.kasa.sample.mykotlinapp.data.LEVEL
 import jp.les.kasa.sample.mykotlinapp.data.StepCountLog
 import jp.les.kasa.sample.mykotlinapp.data.WEATHER
+import jp.les.kasa.sample.mykotlinapp.di.testMockModule
 import jp.les.kasa.sample.mykotlinapp.espresso.TestObserver
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.context.loadKoinModules
+import org.koin.test.AutoCloseKoinTest
 
 @RunWith(AndroidJUnit4::class)
-class InstagramShareActivityTestI : ActivityTestBase() {
+class InstagramShareActivityTestI : AutoCloseKoinTest() {
 
     @get:Rule
     val activityRule = ActivityTestRule(InstagramShareActivity::class.java, false, false)
@@ -47,8 +49,8 @@ class InstagramShareActivityTestI : ActivityTestBase() {
     }
 
     @Before
-    override fun setUp() {
-        super.setUp()
+    fun setUp() {
+        loadKoinModules(testMockModule)
     }
 
     @Test

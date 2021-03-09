@@ -19,13 +19,10 @@ import jp.les.kasa.sample.mykotlinapp.activity.logitem.LogItemActivity
 import jp.les.kasa.sample.mykotlinapp.data.LEVEL
 import jp.les.kasa.sample.mykotlinapp.data.ShareStatus
 import jp.les.kasa.sample.mykotlinapp.data.StepCountLog
-import jp.les.kasa.sample.mykotlinapp.utils.AnalyticsUtil
 import org.assertj.core.api.Assertions
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.core.inject
 import org.koin.test.AutoCloseKoinTest
 
 
@@ -33,12 +30,6 @@ import org.koin.test.AutoCloseKoinTest
 class TwitterShareActivityTest : AutoCloseKoinTest() {
     @get:Rule
     val activityRule = ActivityTestRule(TwitterShareActivity::class.java, false, false)
-
-    @Before
-    fun setUp() {
-        val analyticsUtil: AnalyticsUtil by inject()
-        analyticsUtil.disable()
-    }
 
     @Test
     fun layout() {
