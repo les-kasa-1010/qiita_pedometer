@@ -1,7 +1,10 @@
 package jp.les.kasa.sample.mykotlinapp.di
 
+import android.app.Activity
+import android.os.Bundle
 import androidx.room.Room
 import jp.les.kasa.sample.mykotlinapp.data.LogRoomDatabase
+import jp.les.kasa.sample.mykotlinapp.utils.AnalyticsUtilI
 import jp.les.kasa.sample.mykotlinapp.utils.clearTime
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
@@ -23,6 +26,10 @@ val mockModule = module {
     single(override = true) {
         MockEnvironmentProvider() as EnvironmentProviderI
     }
+
+    single(override = true) {
+        MockAnalyticsUtil() as AnalyticsUtilI
+    }
 }
 
 // カレンダークラスで現在日付を持つInstance取得を提供するプロバイダのテスト用
@@ -40,4 +47,23 @@ class MockCalendarProvider : CalendarProviderI {
 // EnvironmentProviderのモッククラス
 class MockEnvironmentProvider : EnvironmentProviderI {
     override fun isExternalStorageMounted(): Boolean = true
+}
+
+// AnalyticsUtilのモッククラス
+class MockAnalyticsUtil : AnalyticsUtilI() {
+    override fun sendScreenName(
+        activity: Activity,
+        screenName: String,
+        classOverrideName: String?
+    ) {
+    }
+
+    override fun logEvent(eventName: String, bundle: Bundle?) {
+    }
+
+    override fun setUserProperty(propertyName: String, value: String) {
+    }
+
+    override fun setUserId(userId: String?) {
+    }
 }

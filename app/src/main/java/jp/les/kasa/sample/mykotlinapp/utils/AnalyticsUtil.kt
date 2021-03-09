@@ -9,19 +9,38 @@ import com.google.firebase.analytics.FirebaseAnalytics
 /**
  * Firebase Analytics送信用のラッパークラス
  */
-class AnalyticsUtil(app: Application) {
 
-    private val firebaseAnalytics by lazy { FirebaseAnalytics.getInstance(app) }
-
-    init {
-        FirebaseApp.initializeApp(app)
-    }
+abstract class AnalyticsUtilI {
 
     /**
-     * 画面名報告
+     * スクリーン名報告
      */
-    fun sendScreenName(activity: Activity, screenName: String, classOverrideName: String? = null) {
-        firebaseAnalytics.setCurrentScreen(activity, screenName, classOverrideName)
+    abstract fun sendScreenName(
+        activity: Activity,
+        screenName: String,
+        classOverrideName: String? = null
+    )
+
+    /**
+     * イベント報告
+     */
+    abstract fun logEvent(eventName: String, bundle: Bundle?)
+
+    /**
+     * ユーザープロパティ設定
+     */
+    abstract fun setUserProperty(propertyName: String, value: String)
+
+    /**
+     * ユーザーIDのセット
+     */
+    abstract fun setUserId(userId: String?)
+
+    /**
+     * ユーザープロパティ設定の例
+     */
+    fun setPetDogProperty(hasDog: Boolean) {
+        setUserProperty("pet_dog", hasDog.toString())
     }
 
     /**
@@ -29,16 +48,15 @@ class AnalyticsUtil(app: Application) {
      */
     fun sendButtonEvent(buttonName: String) {
         val bundle = Bundle().apply { putString("buttonName", buttonName) }
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM, bundle)
+        logEvent(FirebaseAnalytics.Event.SELECT_ITEM, bundle)
     }
-
 
     /**
      * シェアイベント送信
      */
     fun sendShareEvent(type: String) {
         val bundle = Bundle().apply { putString("share_type", type) }
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE, bundle)
+        logEvent(FirebaseAnalytics.Event.SHARE, bundle)
     }
 
     /**
@@ -46,28 +64,14 @@ class AnalyticsUtil(app: Application) {
      */
     fun sendCalendarCellEvent(date: String) {
         val bundle = Bundle().apply { putString("date", date) }
-        firebaseAnalytics.logEvent("CalendarCell", bundle)
-    }
-
-    /**
-     * ユーザープロパティ設定の例
-     */
-    fun setPetDogProperty(hasDog: Boolean) {
-        firebaseAnalytics.setUserProperty("pet_dog", hasDog.toString())
-    }
-
-    /**
-     * ユーザーIDのセット
-     */
-    fun setUserId(userId: String?) {
-        firebaseAnalytics.setUserId(userId)
+        logEvent("CalendarCell", bundle)
     }
 
     /**
      * サインイン開始ボタンイベント送信
      */
     fun sendSignInStartEvent() {
-        firebaseAnalytics.logEvent("StartSignIn", null)
+        logEvent("StartSignIn", null)
     }
 
     /**
@@ -75,34 +79,63 @@ class AnalyticsUtil(app: Application) {
      */
     fun sendSignInErrorEvent(errorCode: Int) {
         val bundle = Bundle().apply { putInt("errorCode", errorCode) }
-        firebaseAnalytics.logEvent("ErrorSignIn", bundle)
+        logEvent("ErrorSignIn", bundle)
     }
 
     /**
      * サインイン完了イベント送信
      */
     fun sendSignInEvent() {
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, null)
+        logEvent(FirebaseAnalytics.Event.LOGIN, null)
     }
 
     /**
      * サインアウト開始ボタンイベント送信
      */
     fun sendSignOutStartEvent() {
-        firebaseAnalytics.logEvent("StartSignOut", null)
+        logEvent("StartSignOut", null)
     }
 
     /**
      * サインアウト完了イベント送信
      */
     fun sendSignOutEvent() {
-        firebaseAnalytics.logEvent("logout", null)
+        logEvent("logout", null)
     }
 
     /**
      * アカウント削除イベント送信
      */
     fun sendDeleteAccountEvent() {
-        firebaseAnalytics.logEvent("delete_account", null)
+        logEvent("delete_account", null)
+    }
+}
+
+class AnalyticsUtil(app: Application) : AnalyticsUtilI() {
+
+    private val firebaseAnalytics by lazy { FirebaseAnalytics.getInstance(app) }
+
+    init {
+        FirebaseApp.initializeApp(app)
+    }
+
+    override fun sendScreenName(
+        activity: Activity,
+        screenName: String,
+        classOverrideName: String?
+    ) {
+        firebaseAnalytics.setCurrentScreen(activity, screenName, classOverrideName)
+    }
+
+    override fun logEvent(eventName: String, bundle: Bundle?) {
+        firebaseAnalytics.logEvent(eventName, bundle)
+    }
+
+    override fun setUserProperty(propertyName: String, value: String) {
+        firebaseAnalytics.setUserProperty(propertyName, value)
+    }
+
+    override fun setUserId(userId: String?) {
+        firebaseAnalytics.setUserId(userId)
     }
 }
