@@ -27,12 +27,12 @@ class SettingRepositoryTest : AutoCloseKoinTest() {
     @Test
     fun saveReadShareStatus() {
         val defaultData = repository.readShareStatus()
-        assertThat(defaultData).isEqualToComparingFieldByField(ShareStatus())
+        assertThat(defaultData).usingRecursiveComparison().isEqualTo(ShareStatus())
 
         val newData = ShareStatus(true, true, false)
         repository.saveShareStatus(newData)
         val getData = repository.readShareStatus()
-        assertThat(getData).isEqualToComparingFieldByField(newData)
+        assertThat(getData).usingRecursiveComparison().isEqualTo(newData)
     }
 
     @Test
@@ -42,6 +42,6 @@ class SettingRepositoryTest : AutoCloseKoinTest() {
 
         repository.clear()
         val getData = repository.readShareStatus()
-        assertThat(getData).isEqualToComparingFieldByField(ShareStatus())
+        assertThat(getData).usingRecursiveComparison().isEqualTo(ShareStatus())
     }
 }

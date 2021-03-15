@@ -50,11 +50,12 @@ class MainViewModelTest : AutoCloseKoinTest() {
     fun addStepCount() = runBlocking<Unit> {
 
         viewModel.addStepCount(StepCountLog("2019/06/21", 123))
+        Thread.sleep(500)
         viewModel.addStepCount(StepCountLog("2019/06/22", 456, LEVEL.BAD, WEATHER.HOT))
 
         val list = viewModel.repository.allLogs()
         assertThat(list.size).isEqualTo(2)
-        assertThat(list[0]).isEqualToComparingFieldByField(
+        assertThat(list[0]).usingRecursiveComparison().isEqualTo(
             StepCountLog(
                 "2019/06/22",
                 456,
@@ -62,7 +63,7 @@ class MainViewModelTest : AutoCloseKoinTest() {
                 WEATHER.HOT
             )
         )
-        assertThat(list[1]).isEqualToComparingFieldByField(StepCountLog("2019/06/21", 123))
+        assertThat(list[1]).usingRecursiveComparison().isEqualTo(StepCountLog("2019/06/21", 123))
     }
 
     @Test
@@ -75,7 +76,7 @@ class MainViewModelTest : AutoCloseKoinTest() {
 
         val list = viewModel.repository.allLogs()
         assertThat(list.size).isEqualTo(1)
-        assertThat(list[0]).isEqualToComparingFieldByField(StepCountLog("2019/06/21", 123))
+        assertThat(list[0]).usingRecursiveComparison().isEqualTo(StepCountLog("2019/06/21", 123))
     }
 
     @Test

@@ -443,7 +443,7 @@ class MainActivityTestI : AutoCloseKoinTest() {
         val extraData =
             resultActivity.intent.getSerializableExtra(LogItemActivity.EXTRA_KEY_DATA) as StepCountLog
         assertThat(extraData)
-            .isEqualToComparingFieldByField(
+            .usingRecursiveComparison().isEqualTo(
                 StepCountLog("2019/06/19", 666, LEVEL.BAD, WEATHER.RAIN)
             )
     }

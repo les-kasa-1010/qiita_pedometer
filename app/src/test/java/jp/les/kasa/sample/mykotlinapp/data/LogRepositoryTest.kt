@@ -49,7 +49,7 @@ class LogRepositoryTest : AutoCloseKoinTest() {
         assertThat(items[1]).isEqualToComparingFieldByField(
             StepCountLog("2019/08/30", 12345)
         )
-        assertThat(items[0]).isEqualToComparingFieldByField(
+        assertThat(items[0]).usingRecursiveComparison().isEqualTo(
             StepCountLog("2019/08/31", 12345, LEVEL.GOOD, WEATHER.CLOUD)
         )
     }
@@ -61,7 +61,7 @@ class LogRepositoryTest : AutoCloseKoinTest() {
         }
 
         val item = logDao.getLog("2019/08/30")
-        assertThat(item).isEqualToComparingFieldByField(
+        assertThat(item).usingRecursiveComparison().isEqualTo(
             StepCountLog("2019/08/30", 12345, LEVEL.GOOD, WEATHER.CLOUD)
         )
     }
@@ -74,7 +74,7 @@ class LogRepositoryTest : AutoCloseKoinTest() {
         }
 
         val item = logDao.getLog("2019/08/30")
-        assertThat(item).isEqualToComparingFieldByField(
+        assertThat(item).usingRecursiveComparison().isEqualTo(
             StepCountLog("2019/08/30", 12344, LEVEL.NORMAL, WEATHER.FINE)
         )
     }
@@ -122,13 +122,13 @@ class LogRepositoryTest : AutoCloseKoinTest() {
         val data8 = repository.searchRange("2019/08/01", "2019/09/01").first()
         assertThat(data8).isNotEmpty()
         assertThat(data8.size).isEqualTo(3)
-        assertThat(data8[0]).isEqualToComparingFieldByField(
+        assertThat(data8[0]).usingRecursiveComparison().isEqualTo(
             StepCountLog("2019/08/01", 12345)
         )
-        assertThat(data8[1]).isEqualToComparingFieldByField(
+        assertThat(data8[1]).usingRecursiveComparison().isEqualTo(
             StepCountLog("2019/08/30", 12345)
         )
-        assertThat(data8[2]).isEqualToComparingFieldByField(
+        assertThat(data8[2]).usingRecursiveComparison().isEqualTo(
             StepCountLog("2019/08/31", 12345, LEVEL.GOOD, WEATHER.CLOUD)
         )
 
@@ -136,10 +136,10 @@ class LogRepositoryTest : AutoCloseKoinTest() {
         val data12 = repository.searchRange("2019/12/01", "2020/02/01").first()
         assertThat(data12).isNotEmpty()
         assertThat(data12.size).isEqualTo(2)
-        assertThat(data12[0]).isEqualToComparingFieldByField(
+        assertThat(data12[0]).usingRecursiveComparison().isEqualTo(
             StepCountLog("2019/12/31", 1111, LEVEL.BAD, WEATHER.RAIN)
         )
-        assertThat(data12[1]).isEqualToComparingFieldByField(
+        assertThat(data12[1]).usingRecursiveComparison().isEqualTo(
             StepCountLog("2020/01/01", 11115)
         )
 
@@ -147,10 +147,10 @@ class LogRepositoryTest : AutoCloseKoinTest() {
         val data2 = repository.searchRange("2020/02/01", "2020/03/01").first()
         assertThat(data2).isNotEmpty()
         assertThat(data2.size).isEqualTo(2)
-        assertThat(data2[0]).isEqualToComparingFieldByField(
+        assertThat(data2[0]).usingRecursiveComparison().isEqualTo(
             StepCountLog("2020/02/28", 28)
         )
-        assertThat(data2[1]).isEqualToComparingFieldByField(
+        assertThat(data2[1]).usingRecursiveComparison().isEqualTo(
             StepCountLog("2020/02/29", 29)
         )
     }

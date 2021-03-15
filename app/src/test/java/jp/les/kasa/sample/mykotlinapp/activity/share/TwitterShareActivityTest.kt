@@ -93,10 +93,12 @@ class TwitterShareActivityTest : AutoCloseKoinTest() {
 
         val extraData = resultData.getSerializableExtra(LogItemActivity.EXTRA_KEY_DATA) as StepCountLog
         Assertions.assertThat(extraData).isNotNull()
-        Assertions.assertThat(extraData).isEqualToComparingFieldByField(StepCountLog("2019/06/13", 12345, LEVEL.GOOD))
+        Assertions.assertThat(extraData).usingRecursiveComparison()
+            .isEqualTo(StepCountLog("2019/06/13", 12345, LEVEL.GOOD))
 
         val extraData2 = resultData.getSerializableExtra(LogItemActivity.EXTRA_KEY_SHARE_STATUS) as ShareStatus
         Assertions.assertThat(extraData2).isNotNull()
-        Assertions.assertThat(extraData2).isEqualToComparingFieldByField(ShareStatus(true, false, true))
+        Assertions.assertThat(extraData2).usingRecursiveComparison()
+            .isEqualTo(ShareStatus(true, false, true))
     }
 }

@@ -158,7 +158,7 @@ class LogItemActivityTest : AutoCloseKoinTest() {
         onView(withText(R.string.resist)).perform(click())
 
         val status = settingRepository.readShareStatus()
-        assertThat(status).isEqualToComparingFieldByField(ShareStatus(true, true, false))
+        assertThat(status).usingRecursiveComparison().isEqualTo(ShareStatus(true, true, false))
     }
 
     /**
@@ -425,7 +425,7 @@ class LogItemActivityTest : AutoCloseKoinTest() {
         assertThat(data).isNotNull()
         assertThat(data is StepCountLog).isTrue()
         val expectItem = StepCountLog("2019/06/20", 12345, LEVEL.GOOD, WEATHER.CLOUD)
-        assertThat(data).isEqualToComparingFieldByField(expectItem)
+        assertThat(data).usingRecursiveComparison().isEqualTo(expectItem)
 
         scenario.close()
     }
@@ -653,7 +653,7 @@ class LogItemActivityTest : AutoCloseKoinTest() {
         assertThat(data).isNotNull()
         assertThat(data is StepCountLog).isTrue()
         val expectItem = StepCountLog("2019/06/22", 12345, LEVEL.GOOD, WEATHER.CLOUD)
-        assertThat(data).isEqualToComparingFieldByField(expectItem)
+        assertThat(data).usingRecursiveComparison().isEqualTo(expectItem)
     }
 
     /**
@@ -712,7 +712,7 @@ class LogItemActivityTest : AutoCloseKoinTest() {
         assertThat(data).isNotNull()
         assertThat(data is StepCountLog).isTrue()
         val expectItem = StepCountLog("2019/06/22", 456, LEVEL.BAD, WEATHER.HOT)
-        assertThat(data).isEqualToComparingFieldByField(expectItem)
+        assertThat(data).usingRecursiveComparison().isEqualTo(expectItem)
     }
 
     @Test
@@ -739,7 +739,7 @@ class LogItemActivityTest : AutoCloseKoinTest() {
             scenario.result.resultData.getSerializableExtra(LogItemActivity.EXTRA_KEY_SHARE_STATUS)
         assertThat(data).isNotNull()
         assertThat(data is ShareStatus).isTrue()
-        assertThat(data).isEqualToComparingFieldByField(ShareStatus(true, true, false))
+        assertThat(data).usingRecursiveComparison().isEqualTo(ShareStatus(true, true, false))
     }
 
     @Test
@@ -766,7 +766,7 @@ class LogItemActivityTest : AutoCloseKoinTest() {
             scenario.result.resultData.getSerializableExtra(LogItemActivity.EXTRA_KEY_SHARE_STATUS)
         assertThat(data).isNotNull()
         assertThat(data is ShareStatus).isTrue()
-        assertThat(data).isEqualToComparingFieldByField(ShareStatus(true, false, true))
+        assertThat(data).usingRecursiveComparison().isEqualTo(ShareStatus(true, false, true))
     }
 
     @Test
@@ -794,7 +794,7 @@ class LogItemActivityTest : AutoCloseKoinTest() {
             scenario.result.resultData.getSerializableExtra(LogItemActivity.EXTRA_KEY_SHARE_STATUS)
         assertThat(data).isNotNull()
         assertThat(data is ShareStatus).isTrue()
-        assertThat(data).isEqualToComparingFieldByField(ShareStatus(true, true, true))
+        assertThat(data).usingRecursiveComparison().isEqualTo(ShareStatus(true, true, true))
     }
 
     @Test
@@ -818,7 +818,7 @@ class LogItemActivityTest : AutoCloseKoinTest() {
             scenario.result.resultData.getSerializableExtra(LogItemActivity.EXTRA_KEY_SHARE_STATUS)
         assertThat(data).isNotNull()
         assertThat(data is ShareStatus).isTrue()
-        assertThat(data).isEqualToComparingFieldByField(ShareStatus())
+        assertThat(data).usingRecursiveComparison().isEqualTo(ShareStatus())
     }
 
     @Test

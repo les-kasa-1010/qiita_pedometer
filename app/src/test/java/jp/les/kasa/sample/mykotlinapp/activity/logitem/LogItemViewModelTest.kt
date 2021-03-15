@@ -41,7 +41,7 @@ class LogItemViewModelTest : AutoCloseKoinTest() {
         )
 
         assertThat(viewModel.logItem.value)
-            .isEqualToComparingFieldByField(
+            .usingRecursiveComparison().isEqualTo(
                 LogItemData(
                     StepCountLog("2019/06/21", 12345, LEVEL.BAD, WEATHER.COLD),
                     ShareStatus(true, true, false)

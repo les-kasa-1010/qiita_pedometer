@@ -136,29 +136,29 @@ class MonthlyPageViewModelTest : AutoCloseKoinTest() {
         val list = viewModel.createCellData(cal, logs)
 
         assertThat(list.size).isEqualTo(42)
-        assertThat(list[0]).isEqualToComparingFieldByField(CalendarCellData(cal, null))
+        assertThat(list[0]).usingRecursiveComparison().isEqualTo(CalendarCellData(cal, null))
 
         cal = Calendar.getInstance().clearTime()
         cal.set(Calendar.YEAR, 2019)
         cal.set(Calendar.MONTH, 11)
         cal.set(Calendar.DAY_OF_MONTH, 30)
 
-        assertThat(list[1]).isEqualToComparingFieldByField(CalendarCellData(cal, logs[0]))
+        assertThat(list[1]).usingRecursiveComparison().isEqualTo(CalendarCellData(cal, logs[0]))
 
         cal.set(Calendar.DAY_OF_MONTH, 31)
-        assertThat(list[2]).isEqualToComparingFieldByField(CalendarCellData(cal, null))
+        assertThat(list[2]).usingRecursiveComparison().isEqualTo(CalendarCellData(cal, null))
 
         cal = Calendar.getInstance().clearTime()
         cal.set(Calendar.YEAR, 2020)
         cal.set(Calendar.MONTH, 0)
         cal.set(Calendar.DAY_OF_MONTH, 1)
-        assertThat(list[3]).isEqualToComparingFieldByField(CalendarCellData(cal, logs[1]))
+        assertThat(list[3]).usingRecursiveComparison().isEqualTo(CalendarCellData(cal, logs[1]))
 
 
         cal = Calendar.getInstance().clearTime()
         cal.set(Calendar.YEAR, 2020)
         cal.set(Calendar.MONTH, 1)
         cal.set(Calendar.DAY_OF_MONTH, 8)
-        assertThat(list[41]).isEqualToComparingFieldByField(CalendarCellData(cal, logs[11]))
+        assertThat(list[41]).usingRecursiveComparison().isEqualTo(CalendarCellData(cal, logs[11]))
     }
 }
