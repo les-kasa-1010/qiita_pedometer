@@ -2,8 +2,10 @@ package jp.les.kasa.sample.mykotlinapp.di
 
 import android.os.Bundle
 import androidx.room.Room
+import jp.les.kasa.sample.mykotlinapp.activity.signin.MockAuthProvider
 import jp.les.kasa.sample.mykotlinapp.data.LogRoomDatabase
 import jp.les.kasa.sample.mykotlinapp.utils.AnalyticsUtilI
+import jp.les.kasa.sample.mykotlinapp.utils.AuthProviderI
 import jp.les.kasa.sample.mykotlinapp.utils.clearTime
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
@@ -24,6 +26,10 @@ val mockModule = module {
 
     single(override = true) {
         MockEnvironmentProvider() as EnvironmentProviderI
+    }
+
+    single(override = true) {
+        MockAuthProvider(androidApplication()) as AuthProviderI
     }
 
     single(override = true) {

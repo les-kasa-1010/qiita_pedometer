@@ -4,7 +4,8 @@
 
     <application>
 
-        <activity android:name="jp.les.kasa.sample.mykotlinapp.di.MockAuthUIActivity" />
+        <activity android:name="jp.les.kasa.sample.mykotlinapp.activity.signin.TestAuthUIActivity" />
+        <activity android:name="jp.les.kasa.sample.mykotlinapp.activity.signin.MockAuthUIActivity" />
     </application>
 
 </manifest>

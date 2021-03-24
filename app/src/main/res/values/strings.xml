@@ -77,10 +77,10 @@
        また、他のデバイスにデータを引き継ぐことも出来ません。 \n
         \n
     データを安全にバックアップし、復元するには、サインインをしてクラウドに保存することを推奨します</string>
-    <string name="error_email_mismacth">メールアドレスかパスワードが間違っています</string>
+    <string name="error_email_mismatch">メールアドレスかパスワードが間違っています</string>
     <string name="error_id_provider">認証プロバイダーでエラーが起こりました。時間をおいてもう一度お試し頂くか、認証プロバイダーにお問い合わせ下さい。</string>
     <string name="error_user_disabled">ユーザーが無効になっています</string>
-    <string name="error_no_netowork">ネットワークに接続できませんでした。通信環境を確認の上、もう一度お試し下さい</string>
+    <string name="error_no_network">ネットワークに接続できませんでした。通信環境を確認の上、もう一度お試し下さい</string>
     <string name="error_service_update_canceled">必要なGooglePlayサービスの更新をユーザーがキャンセルしたため、処理を続行できません。アップデートを完了し、もう一度お試し下さい</string>
     <string name="error_unknown">認証できませんでした。繰り返しこのメッセージが表示される場合は、以下に表示されているエラーコードと共にお問い合わせ下さい</string>
     <string name="label_error_code">エラーコード = [%1$d]</string>
