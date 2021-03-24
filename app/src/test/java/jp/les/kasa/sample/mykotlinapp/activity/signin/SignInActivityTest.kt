@@ -3,7 +3,6 @@ package jp.les.kasa.sample.mykotlinapp.activity.signin
 import android.app.Activity
 import android.app.Application
 import android.app.Instrumentation
-import android.content.Intent
 import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AlertDialog
@@ -22,7 +21,6 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.FirebaseUiException
 import com.firebase.ui.auth.IdpResponse
-import com.firebase.ui.auth.util.ExtraConstants
 import jp.les.kasa.sample.mykotlinapp.R
 import jp.les.kasa.sample.mykotlinapp.ShadowAlertController
 import jp.les.kasa.sample.mykotlinapp.ShadowAlertDialog
@@ -66,12 +64,13 @@ class SignInActivityTest : AutoCloseKoinTest() {
             options: ActivityOptionsCompat?
         ) {
             when (resultCode) {
-                Activity.RESULT_CANCELED -> dispatchResult(requestCode, Activity.RESULT_CANCELED)
+                // @formatter:off
+                Activity.RESULT_CANCELED -> dispatchResult(requestCode, Activity.RESULT_CANCELED, null)
                 Activity.RESULT_OK -> dispatchResult(requestCode, Activity.RESULT_OK, null)
+                // @formatter:on
                 else -> {
                     val exception = FirebaseUiException(errorCode)
-                    val idpResponse = IdpResponse.from(exception)
-                    val resultIntent = Intent().putExtra(ExtraConstants.IDP_RESPONSE, idpResponse)
+                    val resultIntent = IdpResponse.getErrorIntent(exception)
                     dispatchResult(requestCode, Activity.RESULT_CANCELED, resultIntent)
                 }
             }
@@ -142,7 +141,7 @@ class SignInActivityTest : AutoCloseKoinTest() {
             onView(withText(R.string.label_sign_in)).perform(click())
 
             // resultがすぐにディスパッチされている
-
+            // TODO 処理を入れたらその確認コードを書く
         }
     }
 
