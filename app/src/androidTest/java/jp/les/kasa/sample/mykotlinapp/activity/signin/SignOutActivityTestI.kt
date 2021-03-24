@@ -19,7 +19,7 @@ import org.koin.core.context.loadKoinModules
 import org.koin.test.AutoCloseKoinTest
 
 @RunWith(AndroidJUnit4::class)
-class SignOutActivityTest : AutoCloseKoinTest() {
+class SignOutActivityTestI : AutoCloseKoinTest() {
 
     lateinit var activity: SignOutActivity
 
