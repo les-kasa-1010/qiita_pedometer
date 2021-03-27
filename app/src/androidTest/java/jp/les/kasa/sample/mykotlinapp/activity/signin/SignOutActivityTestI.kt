@@ -115,4 +115,83 @@ class SignOutActivityTestI : AutoCloseKoinTest() {
                 .perform(click())
         }
     }
+
+    @Test
+    fun deleteAccount_data_converted() {
+        // ResultActivityの起動を監視
+        val monitor = Instrumentation.ActivityMonitor(
+            SignInActivity::class.java.canonicalName, null, false
+        )
+        InstrumentationRegistry.getInstrumentation().addMonitor(monitor)
+
+
+        ActivityScenario.launch(SignOutActivity::class.java).use { scenario ->
+            scenario.onActivity {
+                activity = it
+            }
+
+            onView(withId(R.id.signOutScroll)).perform(swipeUp())
+            // アカウント削除ボタン
+            onView(withId(R.id.buttonAccountDelete))
+                .perform(scrollTo(), click())
+
+            onView(withText(R.string.confirm_account_delete_1))
+                .check(matches(isDisplayed()))
+
+            onView(withText(R.string.label_yes))
+                .check(matches(isDisplayed()))
+                .perform(click())
+
+            // コンバートしましたに「はい」と答えたので、アカウント削除をし自分は終了した
+            Assertions.assertThat(activity.isFinishing).isEqualTo(true)
+
+            // ResultActivityが起動したか確認
+            InstrumentationRegistry.getInstrumentation()
+                .waitForMonitorWithTimeout(monitor, 1000L)
+            Assertions.assertThat(monitor.hits).isEqualTo(1)
+        }
+    }
+
+    @Test
+    fun deleteAccount_anyway() {
+        // ResultActivityの起動を監視
+        val monitor = Instrumentation.ActivityMonitor(
+            SignInActivity::class.java.canonicalName, null, false
+        )
+        InstrumentationRegistry.getInstrumentation().addMonitor(monitor)
+
+
+        ActivityScenario.launch(SignOutActivity::class.java).use { scenario ->
+            scenario.onActivity {
+                activity = it
+            }
+
+            onView(withId(R.id.signOutScroll)).perform(swipeUp())
+            // アカウント削除ボタン
+            onView(withId(R.id.buttonAccountDelete))
+                .perform(scrollTo(), click())
+
+            onView(withText(R.string.confirm_account_delete_1))
+                .check(matches(isDisplayed()))
+
+            onView(withText(R.string.label_no))
+                .check(matches(isDisplayed()))
+                .perform(click())
+
+            onView(withText(R.string.confirm_account_delete_2))
+                .check(matches(isDisplayed()))
+
+            onView(withText(R.string.label_yes))
+                .check(matches(isDisplayed()))
+                .perform(click())
+
+            // アカウント削除をし自分は終了した
+            Assertions.assertThat(activity.isFinishing).isEqualTo(true)
+
+            // ResultActivityが起動したか確認
+            InstrumentationRegistry.getInstrumentation()
+                .waitForMonitorWithTimeout(monitor, 1000L)
+            Assertions.assertThat(monitor.hits).isEqualTo(1)
+        }
+    }
 }
