@@ -3,6 +3,9 @@ package jp.les.kasa.sample.mykotlinapp.activity.main
 import android.app.Activity
 import android.app.Instrumentation
 import android.content.Intent
+import androidx.activity.result.ActivityResultRegistry
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
@@ -28,6 +31,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.core.context.loadKoinModules
+import org.koin.dsl.module
 import org.koin.test.AutoCloseKoinTest
 import org.koin.test.inject
 
@@ -42,6 +46,21 @@ class MainActivityTestI : AutoCloseKoinTest() {
     lateinit var defaultIntent: Intent
 
     lateinit var activity: MainActivity
+
+    class TestRegistry(
+        private val resultCode: Int,
+        private val resultData: Intent?
+    ) :
+        ActivityResultRegistry() {
+        override fun <I, O> onLaunch(
+            requestCode: Int,
+            contract: ActivityResultContract<I, O>,
+            input: I,
+            options: ActivityOptionsCompat?
+        ) {
+            dispatchResult(requestCode, resultCode, resultData)
+        }
+    }
 
     @Before
     fun setUp() {
@@ -58,16 +77,26 @@ class MainActivityTestI : AutoCloseKoinTest() {
 
     @Test
     fun onActivityResult_Add() {
-        ActivityScenario.launch<MainActivity>(defaultIntent).use { scenario ->
-            scenario.onActivity {
-                activity = it
-            }
-
-            val resultData = Intent().apply {
-                // @formatter:off
+        val resultData = Intent().apply {
+            // @formatter:off
             putExtra(LogItemActivity.EXTRA_KEY_DATA, StepCountLog("2019/06/19", 666, LEVEL.BAD, WEATHER.SNOW))
             putExtra(LogItemActivity.EXTRA_KEY_SHARE_STATUS, ShareStatus())
             // @formatter:on
+        }
+
+        val testRegistry = TestRegistry(Activity.RESULT_OK, resultData)
+
+        // 追加のモジュールにセット
+        val scopedModule = module {
+            scope<MainActivity> {
+                scoped(override = true) { testRegistry as ActivityResultRegistry }
+            }
+        }
+        loadKoinModules(scopedModule)
+
+        ActivityScenario.launch<MainActivity>(defaultIntent).use { scenario ->
+            scenario.onActivity {
+                activity = it
             }
 
             val monitor = Instrumentation.ActivityMonitor(
@@ -83,14 +112,6 @@ class MainActivityTestI : AutoCloseKoinTest() {
             .perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(index, click()))
         // @formatter:on
 
-            val resultActivity = getInstrumentation().waitForMonitorWithTimeout(monitor, 500L)
-            resultActivity.setResult(Activity.RESULT_OK, resultData)
-            resultActivity.finish()
-
-            getInstrumentation().waitForIdleSync()
-            // テストを一括実行しているとこの処理が間に合わないことがあるらしい?
-            // GCなどの影響があるのか?
-            Thread.sleep(2 * 1000)
             val all = activity.viewModel.repository.allLogs()
             assertThat(all.size).isEqualTo(1)
             getInstrumentation().waitForIdleSync()
